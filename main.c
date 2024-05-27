@@ -208,9 +208,9 @@ int main() {
     divisaoModular(2, 7, 10, 1);
     inversoMultiplicativo(3, 12, 1); printf("\n");
 
-    int a = 3;
-    int b = 12;
-    int mod = 12;
+    int a = 18;
+    int b = 8;
+    int mod = 20;
 
     divEuclidiano(a, b, 1); 
     modEuclidiano(a, b, 1); printf("\n");
