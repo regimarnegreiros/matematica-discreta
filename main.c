@@ -17,7 +17,7 @@ int divEuclidiano(int a, int b, int mostrar) {
     else if (a < 0 && b < 0) q++;
     else q--;
 
-    if (mostrar  == 1) printf("Quociente = %d\n", q);
+    if (mostrar == 1) printf("Quociente = %d\n", q);
     return q;
 }
 
@@ -25,17 +25,21 @@ int modEuclidiano(int a, int b, int mostrar) {
     checarMostrar(mostrar);
 
     if (b == 0) {
-        if (mostrar  == 1) printf("Erro: Divisão por 0 não suportada\n");
+        if (mostrar == 1) printf("Erro: Divisão por 0 não suportada\n");
         return -1;
     }
 
     int r = a - (b * divEuclidiano(a, b, 0));
-    if (mostrar  == 1) printf("Resto = %d\n", r);
+    if (mostrar == 1) printf("Resto = %d\n", r);
 
     return r;
 }
 
 int mdc(int a, int b, int mostrar) {
+    if (b == 0) {
+        if (mostrar == 1) puts("Essa função não aceita (b) igual a 0");
+        return a;
+    }
     checarMostrar(mostrar);
 
     int anterior = a;
@@ -43,7 +47,7 @@ int mdc(int a, int b, int mostrar) {
     int resto = modEuclidiano(anterior, atual, 0);
 
     while (resto != 0) {
-        if (mostrar  == 1) printf("MDC(%d, %d) | %d = %d . %d + %d | c ≠ 0\n", 
+        if (mostrar == 1) printf("MDC(%d, %d) | %d = %d . %d + %d | c ≠ 0\n", 
                             anterior, atual, 
                             anterior, atual, 
                             divEuclidiano(anterior, atual, 0), 
@@ -53,7 +57,7 @@ int mdc(int a, int b, int mostrar) {
         resto = modEuclidiano(anterior, atual, 0);
     }
 
-    if (mostrar  == 1) {
+    if (mostrar == 1) {
         printf("MDC(%d, %d) | %d = %d . %d + %d | c = 0\n", 
                 anterior, atual, anterior, atual, 
                 divEuclidiano(anterior, atual, 0), resto);
@@ -67,7 +71,7 @@ int adicaoModular(int a, int b, int z, int mostrar) {
     checarMostrar(mostrar);
 
     int adicao = modEuclidiano(a + b, z, 0);
-    if (mostrar  == 1) printf("%d + %d em z%d = %d\n", a, b, z, adicao);
+    if (mostrar == 1) printf("%d + %d em z%d = %d\n", a, b, z, adicao);
 
     return adicao;
 }
@@ -76,7 +80,7 @@ int subtracaoModular(int a, int b, int z, int mostrar) {
     checarMostrar(mostrar);
 
     int subtracao = modEuclidiano(a - b, z, 0);
-    if (mostrar  == 1) printf("%d - %d em z%d = %d\n", a, b, z, subtracao);
+    if (mostrar == 1) printf("%d - %d em z%d = %d\n", a, b, z, subtracao);
     return subtracao;
 }
 
@@ -84,7 +88,7 @@ int multiplicacaoModular(int a, int b, int z, int mostrar) {
     checarMostrar(mostrar);
 
     int multiplicacao = modEuclidiano(a * b, z, 0);
-    if (mostrar  == 1) printf("%d x %d em z%d = %d\n", a, b, z, multiplicacao);
+    if (mostrar == 1) printf("%d x %d em z%d = %d\n", a, b, z, multiplicacao);
 
     return multiplicacao;
 }
@@ -94,17 +98,17 @@ int inversoMultiplicativo(int a, int z, int mostrar) {
 
     for(int b = 0; b < z; b++) {
         if(modEuclidiano(a*b, z, 0) == 1) {
-            if (mostrar  == 1) printf("Inverso de %d em z%d é %d\n", a, z, b);
+            if (mostrar == 1) printf("Inverso de %d em z%d é %d\n", a, z, b);
             return b;
         }
     }
-    if (mostrar  == 1) printf("%d ∄ inverso em z%d\n", a, z);
+    if (mostrar == 1) printf("%d ∄ inverso em z%d\n", a, z);
 
     return -1;
 }
 
 int divisaoModular(int a, int b, int z, int mostrar) {
-    checarMostrar(mostrar  == 1);
+    checarMostrar(mostrar == 1);
 
     int inverso = inversoMultiplicativo(b, z, 0);
     if (inverso == -1) {
@@ -113,7 +117,7 @@ int divisaoModular(int a, int b, int z, int mostrar) {
     }
 
     int divisao = multiplicacaoModular(a, inverso, z, 0);
-    if (mostrar  == 1) printf("%d / %d em z%d = %d\n", a, b, z, divisao);
+    if (mostrar == 1) printf("%d / %d em z%d = %d\n", a, b, z, divisao);
 
     return divisao;
 }
@@ -124,10 +128,10 @@ int congruencia(int a, int b, int mod_n, int mostrar) {
     int r = modEuclidiano(a-b, mod_n, 0);
 
     if (r == 0) {
-        if (mostrar  == 1) printf("%d ≡ %d (mod %d) pois %d-(%d) = %d e %d | %d\n",
+        if (mostrar == 1) printf("%d ≡ %d (mod %d) pois %d-(%d) = %d e %d | %d\n",
                                     a, b, mod_n, a, b, a-b, mod_n, a-b);
     } else {
-        if (mostrar  == 1) printf("%d ≢  %d (mod %d) pois %d-(%d) = %d e %d ∤ %d\n", 
+        if (mostrar == 1) printf("%d ≢  %d (mod %d) pois %d-(%d) = %d e %d ∤ %d\n", 
                                     a, b, mod_n, a, b, a-b, mod_n, a-b);
     }
 
@@ -144,7 +148,7 @@ int congruenciaLinear(int a, int b, int mod_n, int mostrar) {
     int m = mdc(a, mod_n, 0);
     
     if (modEuclidiano(b, m, 0) == 0) {
-        if(mostrar  == 1) {
+        if (mostrar == 1) {
             printf("%dx ≡ %d mod(%d)\n", a, b, mod_n);
             printf("mdc(%d, %d) = %d e %d | %d portanto ∃ solução\n", a, mod_n, m, m, b);
             printf("(%d/%d)x ≡ (%d/%d) (mod %d/%d)\n", a, m, b, m, mod_n, m);
@@ -154,38 +158,38 @@ int congruenciaLinear(int a, int b, int mod_n, int mostrar) {
         b = b / m;
         mod_n = mod_n / m;
 
-        if (mostrar  == 1) printf("%dx ≡ %d (mod %d)\n", a, b, mod_n);
+        if (mostrar == 1) printf("%dx ≡ %d (mod %d)\n", a, b, mod_n);
 
         int inverso = inversoMultiplicativo(a, mod_n, 0);
 
-        if (mostrar  == 1) {
+        if (mostrar == 1) {
             printf("O inverso de %d (mod %d) é %d\n", a, mod_n, inverso);
             printf("%d . %dx ≡ %d . %d mod(%d)\n", inverso, a, inverso, b, mod_n);
         }
 
         b = b * inverso;
 
-        if (mostrar  == 1) printf("x ≡ %d (mod %d)\n", b, mod_n);
+        if (mostrar == 1) printf("x ≡ %d (mod %d)\n", b, mod_n);
 
         int q = b / mod_n;
         
-        if (mostrar  == 1) printf("x ≡ %d - %d . %d (mod %d)\n", b, mod_n, q, mod_n);
+        if (mostrar == 1) printf("x ≡ %d - %d . %d (mod %d)\n", b, mod_n, q, mod_n);
 
         b = b - q * mod_n;
 
-        if (mostrar  == 1) {
+        if (mostrar == 1) {
             printf("x ≡ %d (mod %d)\n", b, mod_n);
-            printf("x = %d + %dk\n", b, mod_n);
+            printf("x = %d + %dt\n", b, mod_n);
             printf("x = {..., ");
-            int k;
-            for (k = -3; k < 3; k++) {
-                printf("%d, ", b + mod_n * k);
+            int t;
+            for (t = -3; t < 3; t++) {
+                printf("%d, ", b + mod_n * t);
             }
-            printf("%d, ...}\n", b + mod_n * ++k);
+            printf("%d, ...}\n", b + mod_n * ++t);
             printf("%d . %d ≡ %d (mod %d)\n", aInicial, b, bInicial, modInicial);
         }
 
-        congruencia(aInicial * b, bInicial, modInicial, mostrar  == 1);
+        congruencia(aInicial * b, bInicial, modInicial, mostrar == 1);
 
         return b;
     } else {
@@ -198,28 +202,89 @@ int congruenciaLinear(int a, int b, int mod_n, int mostrar) {
     }
 }
 
+struct XY {
+    int x;
+    int y;
+};
+
+struct XY equacaoDiofantina(int a, int b, int c, int mostrar) {
+    struct XY xy;
+    if (a < 0|| b <= 0) {
+        if (mostrar == 1) puts("Essa função não aceita valores negativos ou (b) igual a 0");
+        xy.x = a;
+        xy.y = b;
+        return xy;
+    }
+    checarMostrar(mostrar);
+    if (mostrar == 1) printf("%dx + %dy = %d\n", a, b, c);
+    
+    int x, y;
+
+    int aInicial = a;
+    int bInicial = b;
+    int cInicial = c;
+
+    int m = mdc(a, b, 0);
+    
+    if (modEuclidiano(c, m, 0) == 0) {
+        if (mostrar == 1) {
+            printf("mdc(%d, %d) = %d e %d | %d portanto ∃ solução\n", a, b, m, m, c);
+        }
+
+        if (a < b) {
+            b = modEuclidiano(b, a, 0);
+            c = modEuclidiano(c, a, 0);
+            y = congruenciaLinear(b, c, a, 0);
+            x = (cInicial - (bInicial * y)) / a;
+
+            if (mostrar == 1) printf("x = %d - %dt\n", x, bInicial);
+            if (mostrar == 1) printf("y = %d + %dt\n", y, aInicial);
+        } else {
+            a = modEuclidiano(a, b, 0);
+            c = modEuclidiano(c, b, 0);
+            x = congruenciaLinear(a, c, b, 0);
+            y = (cInicial - (aInicial * x)) / b;
+
+            if (mostrar == 1) printf("x = %d - %dt\n", x, bInicial);
+            if (mostrar == 1) printf("y = %d + %dt\n", y, aInicial);
+
+            xy.x = x;
+            xy.y = y;
+        }
+    } else {
+        xy.x = a;
+        xy.y = b;
+        if (mostrar == 1) {
+            printf("mdc(%d, %d) = %d e %d ∤ %d portanto ∄ solução\n", a, b, m, m, c);
+        }
+    }
+    return xy;
+}
+
 int main() {
 
-    printf("\n");
+    // puts("");
 
-    adicaoModular(5, 5, 5, 1);
-    subtracaoModular(7, 5, 4, 1);
-    multiplicacaoModular(7, 5, 4, 1);
-    divisaoModular(2, 7, 10, 1);
-    inversoMultiplicativo(3, 12, 1); printf("\n");
+    // adicaoModular(5, 5, 5, 1);
+    // subtracaoModular(7, 5, 4, 1);
+    // multiplicacaoModular(7, 5, 4, 1);
+    // divisaoModular(2, 7, 10, 1);
+    // inversoMultiplicativo(25, -28, 1); puts("");
 
-    int a = 18;
-    int b = 8;
-    int mod = 20;
+    int a = 7;
+    int b = 19;
+    // int mod = 20;
 
     divEuclidiano(a, b, 1); 
-    modEuclidiano(a, b, 1); printf("\n");
+    modEuclidiano(a, b, 1); puts("");
 
-    mdc(a, b, 1); printf("\n");
+    mdc(20, 0, 1); puts("");
 
-    congruencia(a, b, mod, 1); printf("\n");
+    // congruencia(a, b, mod, 1); puts("");
     
-    congruenciaLinear(a, b, mod, 1); printf("\n");
+    congruenciaLinear(5, 50, 3, 1); puts("");
+
+    equacaoDiofantina(5, 7, 50, 1);
     
     return 0;
 }
